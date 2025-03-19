@@ -12,6 +12,8 @@ export default function SignInPage() {
           <SignIn 
             path="/sign-in"
             routing="path"
+            redirectUrl="/dashboard"
+            afterSignInUrl="/dashboard"
             appearance={{
               elements: {
                 rootBox: "w-full",
@@ -30,7 +32,7 @@ export default function SignInPage() {
           />
 
           <div className="text-center text-zinc-400">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/sign-up" className="text-[#C2650F] hover:text-[#D67A1F]">
               Sign up
             </Link>

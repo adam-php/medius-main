@@ -3,22 +3,29 @@ import React, { useState } from 'react';
 import { Activity, Shield, User, RefreshCw, Clock, DollarSign, Settings, CheckCircle, AlertTriangle, Eye } from 'lucide-react';
 import { useAuth } from '@clerk/nextjs';
 import { UserButton } from '@clerk/nextjs';
+import Image from 'next/image';
 
 const MediusDashboard = () => {
   const { userId } = useAuth();
+  const [activeTab, setActiveTab] = useState('overview');
   
   if (!userId) {
     return <div>Unauthorized</div>;
   }
-  const [activeTab, setActiveTab] = useState('overview');
 
   return (
     <div className="flex h-screen w-full bg-black text-white">
       {/* Sidebar Navigation */}
       <aside className="w-64 bg-black border-r border-gray-800 p-4">
         <div className="mb-6 flex items-center gap-2">
-          <div className="w-8 h-8">
-            <img src="/cropped_image.png" alt="Medius Logo" className="w-full h-full" />
+          <div className="w-8 h-8 relative">
+            <Image 
+              src="/cropped_image.png" 
+              alt="Medius Logo" 
+              fill
+              style={{ objectFit: 'contain' }}
+              sizes="32px"
+            />
           </div>
           <span className="font-bold text-lg">Medius</span>
         </div>
