@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react"
-
+import React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Eye, EyeOff } from "lucide-react"
@@ -10,6 +9,7 @@ import Image from "next/image"
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-black">
@@ -30,12 +30,12 @@ export default function SignUpForm() {
           <div className="w-full space-y-3">
             <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
               <DiscordIcon className="mr-2 h-5 w-5" />
-              Continue with Discord
+              Sign up with Discord
             </Button>
 
             <Button className="w-full bg-white hover:bg-gray-100 text-gray-800">
               <GoogleIcon className="mr-2 h-5 w-5" />
-              Continue with Google
+              Sign up with Google
             </Button>
           </div>
 
@@ -48,25 +48,7 @@ export default function SignUpForm() {
 
           {/* Form */}
           <form className="w-full space-y-4">
-            <div className="space-y-1">
-              <label htmlFor="username" className="text-sm text-gray-300">
-                Username
-              </label>
-              <div className="flex">
-                {/* Prefix as a separate element */}
-                <div className="flex items-center rounded-l-md bg-[#111] px-3 py-2 text-sm text-gray-500 border-r border-gray-800">
-                  hello.com/
-                </div>
-                {/* Username input field */}
-                <input
-                  type="text"
-                  id="username"
-                  placeholder="Choose your username"
-                  className="w-full rounded-r-md bg-[#111] py-2 px-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                />
-              </div>
-            </div>
-
+            {/* Email */}
             <div className="space-y-1">
               <label htmlFor="email" className="text-sm text-gray-300">
                 Email
@@ -82,6 +64,7 @@ export default function SignUpForm() {
               </div>
             </div>
 
+            {/* Password */}
             <div className="space-y-1">
               <label htmlFor="password" className="text-sm text-gray-300">
                 Password
@@ -90,7 +73,7 @@ export default function SignUpForm() {
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  placeholder="Create a password"
+                  placeholder="Enter your password"
                   className="w-full bg-transparent py-2 px-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                 />
                 <button
@@ -103,22 +86,45 @@ export default function SignUpForm() {
               </div>
             </div>
 
+            {/* Confirm Password */}
+            <div className="space-y-1">
+              <label htmlFor="confirmPassword" className="text-sm text-gray-300">
+                Confirm Password
+              </label>
+              <div className="flex rounded-md bg-[#111]">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  placeholder="Confirm your password"
+                  className="w-full bg-transparent py-2 px-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="flex items-center pr-3 text-gray-500"
+                >
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Sign Up Button */}
             <Button
               type="submit"
               className="w-full mt-6 bg-transparent hover:bg-orange-900/20 text-white border border-orange-500 shadow-[0_0_15px_rgba(255,150,0,0.5),0_0_30px_rgba(255,150,0,0.3)]"
             >
-              Create Account
+              Sign Up
             </Button>
           </form>
 
-          {/* Login link */}
+          {/* Sign In Link */}
           <p className="text-sm text-gray-400">
             Already have an account?{" "}
             <Link
               href="/sign-in"
               className="text-gray-300 hover:text-white hover:text-shadow-[0_0_8px_rgba(255,150,0,0.5)]"
             >
-              Log in
+              Sign in
             </Link>
           </p>
         </div>
@@ -163,4 +169,3 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-

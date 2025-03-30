@@ -1,6 +1,7 @@
 import { type Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 import './globals.css'
 
 const geistSans = Geist({
@@ -44,6 +45,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
           {children}
+          <div id="toaster" className="fixed bottom-4 right-4 z-50" />
+          <Toaster></Toaster>
         </body>
       </html>
     </ClerkProvider>
