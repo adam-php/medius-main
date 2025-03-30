@@ -20,18 +20,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils"; // Ensure this path is correct
 
-// Import specific crypto icons (No USDC/USDT import needed)
-import Btc from 'react-crypto-icons';
-import Eth from 'react-crypto-icons';
-import Ltc from 'react-crypto-icons';
-import Sol from 'react-crypto-icons';
-import Algo from 'react-crypto-icons';
-import Doge from 'react-crypto-icons';
-import Bnb from 'react-crypto-icons';
-import Avax from 'react-crypto-icons';
-import Matic from 'react-crypto-icons';
-import Trx from 'react-crypto-icons';
-import Xlm from 'react-crypto-icons';
+// We'll use lucide-react icons instead of react-crypto-icons
 
 // --- Data Interfaces ---
 interface Deal { id: string; deal_id: string; deal_title: string; seller_id: string; seller_username: string; buyer_id: string; buyer_username: string; crypto_type: string; amount: number; usd_value?: number; fee_payer: 'seller' | 'buyer' | 'split'; status: 'created' | 'funded' | 'completed' | 'canceled' | 'cancel_requested_buyer' | 'cancel_requested_seller' | 'disputed' | 'in_progress' | 'pending_release'; escrow_address?: string; created_at: string; updated_at: string; fee_amount?: number; fee_usd_value?: number; }
@@ -49,39 +38,150 @@ function getInitials(name: string | undefined | null): string { if (!name || typ
 function getStatusBadgeVariant(status: Deal['status'] | undefined | null): { variant: any; className: string; text: string; icon?: React.ElementType} { switch (status) { case 'completed': return { variant: 'success', className: 'bg-green-500/10 text-green-400 border border-green-500/20', text: 'Completed', icon: Check }; case 'funded': return { variant: 'info', className: 'bg-blue-500/10 text-blue-400 border border-blue-500/20', text: 'Funded', icon: Check }; case 'in_progress': return { variant: 'info', className: 'bg-blue-500/10 text-blue-400 border border-blue-500/20', text: 'In Progress', icon: Clock }; case 'pending_release': return { variant: 'warning', className: 'bg-yellow-600/10 text-yellow-500 border border-yellow-600/20', text: 'Release Pending', icon: Clock }; case 'created': return { variant: 'default', className: 'bg-gray-500/10 text-gray-400 border border-gray-500/20', text: 'Awaiting Deposit', icon: Clock }; case 'canceled': return { variant: 'destructive', className: 'bg-red-500/10 text-red-400 border border-red-500/20', text: 'Canceled', icon: X }; case 'cancel_requested_buyer': return { variant: 'warning', className: 'bg-orange-500/10 text-orange-400 border border-orange-500/20', text: 'Cancel Req. (Buyer)', icon: HelpCircle }; case 'cancel_requested_seller': return { variant: 'warning', className: 'bg-orange-500/10 text-orange-400 border border-orange-500/20', text: 'Cancel Req. (Seller)', icon: HelpCircle }; case 'disputed': return { variant: 'destructive', className: 'bg-purple-600/10 text-purple-400 border border-purple-600/20', text: 'Disputed', icon: Shield }; default: return { variant: 'default', className: 'bg-gray-700/20 text-gray-500 border border-gray-700/30', text: status || 'Unknown', icon: HelpCircle }; } }
 function formatFileSize(bytes: number | undefined | null): string { if (bytes === undefined || bytes === null || bytes <= 0) return '0 Bytes'; const k = 1024; const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']; const i = Math.floor(Math.log(bytes) / Math.log(k)); return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i]; }
 
-// *** MODIFIED getCryptoIcon Function ***
+// *** UPDATED getCryptoIcon Function - Using lucide-react icons ***
 function getCryptoIcon(cryptoType: string | undefined | null, size: number = 16): React.ReactNode {
     const cleanedType = cryptoType?.toLowerCase() || '';
     if (!cleanedType) return <HelpCircle size={size} className="text-gray-500" />;
 
+    // Use lucide-react icons and custom elements for crypto icons
     switch (cleanedType) {
-        case 'btc': return <Btc size={size} />;
-        case 'eth': return <Eth size={size} />;
-        case 'ltc': return <Ltc size={size} />;
-        case 'sol': return <Sol size={size} />;
-        case 'algo': return <Algo size={size} />;
-        case 'doge': return <Doge size={size} />;
-        case 'base': return <span style={{ fontSize: `${size * 0.8}px` }} className="font-bold text-blue-400">B</span>;
-        case 'bnb': return <Bnb size={size} />;
-        case 'avax': return <Avax size={size} />;
-        case 'matic': return <Matic size={size} />;
-        case 'trx': return <Trx size={size} />;
-        case 'xlm': return <Xlm size={size} />;
-        case 'xrp': return <span style={{ fontSize: `${size * 0.8}px` }} className="font-bold text-blue-500">✕</span>;
-        case 'paypal': return <CreditCard size={size * 0.9} className="text-blue-400" />;
-        // No explicit USDC, USDT cases
-
+        // Bitcoin - orange circle with B
+        case 'btc':
+        case 'bitcoin':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-orange-500">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">B</span>
+                </div>
+            );
+        
+        // Ethereum - purple hexagon with diamond
+        case 'eth':
+        case 'ethereum':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-purple-600">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">Ξ</span>
+                </div>
+            );
+        
+        // Litecoin - blue circle with L
+        case 'ltc':
+        case 'litecoin':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-blue-500">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">L</span>
+                </div>
+            );
+        
+        // Solana - purple gradient with S
+        case 'sol':
+        case 'solana':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-purple-500">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">S</span>
+                </div>
+            );
+        
+        // Algorand - black circle with A
+        case 'algo':
+        case 'algorand':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-gray-800">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">A</span>
+                </div>
+            );
+        
+        // Dogecoin - yellow circle with D
+        case 'doge':
+        case 'dogecoin':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-yellow-500">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">D</span>
+                </div>
+            );
+        
+        // Binance Coin - yellow circle with B
+        case 'bnb':
+        case 'binance':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-yellow-400">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-gray-900">B</span>
+                </div>
+            );
+        
+        // Avalanche - red circle with A
+        case 'avax':
+        case 'avalanche':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-red-500">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">A</span>
+                </div>
+            );
+        
+        // Polygon/Matic - purple circle with M
+        case 'matic':
+        case 'polygon':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-purple-700">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">M</span>
+                </div>
+            );
+        
+        // Tron - red circle with T
+        case 'trx':
+        case 'tron':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-red-600">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">T</span>
+                </div>
+            );
+        
+        // Stellar - blue circle with X
+        case 'xlm':
+        case 'stellar':
+            return (
+                <div style={{ width: size, height: size }} className="relative flex items-center justify-center rounded-full bg-blue-400">
+                    <span style={{ fontSize: `${size * 0.6}px` }} className="font-bold text-white">X</span>
+                </div>
+            );
+        
+        // Base - blue B
+        case 'base':
+            return <span style={{ fontSize: `${size * 0.8}px` }} className="font-bold text-blue-400">B</span>;
+        
+        // XRP - blue X
+        case 'xrp':
+        case 'ripple':
+            return <span style={{ fontSize: `${size * 0.8}px` }} className="font-bold text-blue-500">✕</span>;
+        
+        // PayPal - use CreditCard icon
+        case 'paypal':
+            return <CreditCard size={size * 0.9} className="text-blue-400" />;
+        
+        // USD stablecoins - use DollarSign icon
+        case 'usdc':
+        case 'usdt':
+        case 'tusd':
+        case 'dai':
+        case 'busd':
+            return <DollarSign size={size * 0.9} className="text-green-500"/>;
+        
         default:
-             if (cleanedType.includes('usd')) { // Catch common stablecoins like USDC, USDT, TUSD, DAI (if named with 'usd')
-                 return <DollarSign size={size * 0.9} className="text-green-500"/>;
-             }
+            // Catch other stablecoins
+            if (cleanedType.includes('usd')) {
+                return <DollarSign size={size * 0.9} className="text-green-500"/>;
+            }
+            
+            // Use first letter for unknown cryptocurrencies
             const firstLetter = cleanedType.substring(0, 1).toUpperCase();
             if (firstLetter.match(/[A-Z]/)) {
-                 return <span style={{ fontSize: `${size * 0.8}px` }} className="font-bold">{firstLetter}</span>;
+                return <span style={{ fontSize: `${size * 0.8}px` }} className="font-bold">{firstLetter}</span>;
             }
-            return <HelpCircle size={size} className="text-gray-500"/>; // Final fallback
+            
+            // Final fallback
+            return <HelpCircle size={size} className="text-gray-500"/>;
     }
 }
+    
 
 
 // --- Main Component ---
