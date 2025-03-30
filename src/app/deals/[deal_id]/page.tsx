@@ -346,7 +346,7 @@ export default function DealChatPage() {
                                     <div> <div className="text-white font-medium truncate" title={deal.deal_title}>{deal.deal_title || "Escrow Transaction"}</div> <div className="text-gray-400 text-xs">#{deal.deal_id}</div> </div>
                                 </div>
                                 <div className="flex items-center gap-2 md:gap-3">
-                                    <Tooltip> <TooltipTrigger> <div className={cn("w-3 h-3 rounded-full transition-colors duration-500", wsConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500')}/> </TooltipTrigger> <TooltipContent><p>Chat {wsConnected ? 'Connected' : 'Disconnected'}{wsError ? ` (${wsError})`:''}</p></TooltipContent> </Tooltip>
+                                    <Tooltip> <TooltipTrigger asChild> <div className={cn("w-3 h-3 rounded-full transition-colors duration-500", wsConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500')}/> </TooltipTrigger> <TooltipContent><p>Chat {wsConnected ? 'Connected' : 'Disconnected'}{wsError ? ` (${wsError})`:''}</p></TooltipContent> </Tooltip>
                                     <Link href="/dashboard"><Button variant="outline" size="sm" className="border-gray-700 hover:bg-gray-800 h-9">Dashboard</Button></Link>
                                 </div>
                             </div>
